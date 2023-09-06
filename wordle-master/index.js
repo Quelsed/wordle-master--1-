@@ -2447,8 +2447,9 @@ const showMessage = (message) => {
   toast.className = 'toast';
 
   document.querySelector('.toaster ul').prepend(toast);
-  
-  setTimeout(() => toast.classList.add('fade'), 1000);
+  //Здесь изменяется время отображения сообщения
+
+  setTimeout(() => toast.classList.add('fade'), 2000);
 
   toast.addEventListener('transitionend', (event) => event.target.remove());
 }
