@@ -13,9 +13,9 @@
             <h1 class="title">Суз боткасы</h1>
             <h2 class="description">Описание на татарском</h2>
             <div class="buttons">
-                <a class="how-to-play-button" href=""><p class="how-to-play-button-text">Кагыйдәләр</p></a>
-                <a class="login-button" href="login.html"><p class="login-button-text">Log in</p></a>
-                <a class="play-button" href="index.html"><p class="button-play-text">Играть</p></a>
+                <button class="how-to-play-button">Как играть</button>
+                <a href="login.html">Log in</a>
+
             </div>
         </div>
     </div>

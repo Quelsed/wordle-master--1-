@@ -1,0 +1,158 @@
+:root {
+    --color-black: #121213;
+    --color-white: #fff;
+    --color-green: #538d4e;
+    --color-yellow: #B59F3B;
+    --color-gray-dark: #3A3A3C;
+    --color-gray-light: #818384;
+}
+
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+
+body {
+    background: var(--color-white);
+    color: var(--color-black);
+
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+
+    min-height: 100vh;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+header { border-bottom: 1px solid var(--color-gray-dark); }
+@font-face {
+    font-family: Inter;
+    src: url("inter.otf")
+}
+.main_box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+.title{
+    font-size: 36px;
+    line-height: 38px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.out_div{
+    position: relative;
+    color: #000;
+    max-width: 100%;
+    width: 100%;
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.out_div_2{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 50px 42px 0;
+}
+.description{
+    line-height: 28px;
+    margin-bottom: 28px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 24.8px;
+}
+
+@media (width < 760px) {
+    .buttons{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column-reverse;
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 24px
+    }
+}
+@media (width >= 760px) {
+    .buttons{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 24px
+    }
+}
+
+
+.how-to-play-button{
+    display: flex;
+    padding: 0px 40px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 360px;
+    border: 1px solid #000;
+    background: #FFF;
+    text-decoration: none;
+    margin: 0px 10px 8px;
+
+}
+.how-to-play-button-text{
+    color: #000;
+    font-family: Inter, serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.play-button{
+    display: flex;
+    height: 60px;
+    padding: 18px 64px 18px 65px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 360px;
+    border: 1px solid #000;
+    background: #000;
+    text-decoration: none;
+    margin: 0px 10px 8px;
+}
+.button-play-text{
+    color: #ffffff;
+    font-family: Inter, serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.login-button{
+    display: flex;
+    height: 60px;
+    padding: 18px 69px 18px 70px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 360px;
+    border: 1px solid #000;
+    background: #FFF;
+    text-decoration: none;
+    margin: 0 10px 8px;
+}
+.login-button-text{
+    color: #000;
+    font-family: Inter, serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
