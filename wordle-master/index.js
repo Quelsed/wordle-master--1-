@@ -2413,6 +2413,7 @@ const WORD_TRANSLATES_LIST = [];
 const INDEX = getRandomIndex(WORD_LIST.length);
 const WORD_OF_THE_DAY = WORD_LIST[INDEX];
 const WORD_OF_THE_DAY_TRANSLATE = WORD_TRANSLATES_LIST[INDEX];
+const FAV_WORDS = [];
 console.log(WORD_OF_THE_DAY);
 
 // In case we want to make the game difficult or easier
@@ -2421,16 +2422,22 @@ const MAX_NUMBER_OF_ATTEMPTS = 6;
 const history = [];
 let currentWord = '';
 
+let popupBg = document.querySelector('.popup__bg');
+let popup = document.querySelector('.popup');
+let closePopupButton = document.querySelector('.close__popup');
+let statsButton = document.querySelector('.stats');
+
+
 // Get everything setup and the game responding to user actions.
 const init = () => {
 
   const KEYBOARD_KEYS = ['ЙӨУКЕНГШЩӘЗҺҮЁ', 'ФЫВАПРОЛДЖҢХЦЭ', 'ЯЧСМИТҖБЮЬЪ'];
 
-  // Grab the gameboard and the keyboard
+  // Grab the game board and the keyboard
   const gameBoard = document.querySelector('#board');
   const keyboard = document.querySelector('#keyboard');
 
-  // Generate the gameboard and the keyboard
+  // Generate the game board and the keyboard
   generateBoard(gameBoard);
   generateBoard(keyboard, 3, 14, KEYBOARD_KEYS, true);
 
@@ -2522,16 +2529,20 @@ const checkGuess = (guess, word) => {
     }
   });
 
-  if (guess == word){
+  if (guess === word){
     showMessage('Котлыйм, дөрес!');
+    popupBg.classList.add('active');
+    popup.classList.add('active');
     return;
   }
   
 
   history.push(currentWord);
 
-  if (history.length == MAX_NUMBER_OF_ATTEMPTS && guess!=word){
+  if (history.length === MAX_NUMBER_OF_ATTEMPTS && guess!==word){
     showMessage('Кызганыч, сез сүз тапмадыгыз.');
+    popupBg.classList.add('active');
+    popup.classList.add('active');
     return;
   }
   currentWord = '';
@@ -2544,7 +2555,7 @@ const onKeyboardButtonClick = (event) => {
 }
 
 const onKeyDown = (key) => {
-  // Don't allow more then 6 attempts to guess the word
+  // Don't allow more than 6 attempts to guess the word
   if (history.length >= MAX_NUMBER_OF_ATTEMPTS) return;
 
   // Find the current active row
@@ -2560,7 +2571,7 @@ const onKeyDown = (key) => {
       targetColumn = currentRow.querySelector('li:last-child');
     } else {
       // Find the previous column, otherwise get the first column
-      // so we always have have a column to operate on
+      // so we always have a column to operate on
       targetColumn = targetColumn.previousElementSibling ?? targetColumn;
     }
 
@@ -2591,7 +2602,7 @@ const onKeyDown = (key) => {
   }
 
 
-  // We have reached the 5 letter limit for the guess word
+  // We have reached the 5-letter limit for the guess word
   if (currentWord.length >= 5) return;
 
   const upperCaseLetter = key.toUpperCase();
@@ -2649,7 +2660,19 @@ const generateBoard = (board, rows = 6, columns = 5, keys = [], keyboard = false
 // Call the initialization function when the DOM is loaded to get
 // everything setup and the game responding to user actions.
 document.addEventListener('DOMContentLoaded', init);
-
+closePopupButton.addEventListener('click', () => {
+    popupBg.classList.remove('active');
+    popup.classList.remove('active');
+});
+document.addEventListener('click', (e) => {
+    if(e.target === popupBg){
+        popupBg.classList.remove('active');
+    }
+});
+statsButton.addEventListener('click', ()=>{
+    popupBg.classList.add('active');
+    popup.classList.add('active');
+})
 // Based on the max length of the Array. Return a random items index
 // within the Array's length.
 function getRandomIndex (maxLength) {
