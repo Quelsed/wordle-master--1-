@@ -9,6 +9,15 @@
 }
 
 html { box-sizing: border-box; }
+@font-face {
+  font-family: InterBold;
+  src: url("inter-bold.otf")
+}
+@font-face {
+  font-family: Inter;
+  src: url("inter.otf")
+}
+
 *, *:before, *:after { box-sizing: inherit; }
 
 body {
@@ -26,20 +35,12 @@ body {
   gap: 2rem;
 }
 
-<<<<<<< HEAD
 header { border-bottom: 1px solid var(--color-gray-dark); display: inline}
 .header__div{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.empty{
-  opacity: 0;
-}
-=======
-header { border-bottom: 1px solid var(--color-gray-light); }
-
->>>>>>> rules
 h1 {
   margin: 10px 0 10px 50px;
   padding: 0;
@@ -71,6 +72,7 @@ main {
   border-width: 1px;
   opacity: 1;
   pointer-events: all;
+  cursor: pointer;
 }
 .right-word{
   opacity: 1;
@@ -84,8 +86,19 @@ main {
   opacity: 0;
   pointer-events: none;
 }
-
-
+.statistic_container{
+  display: flex;
+  justify-content: center;
+}
+.statistic_value{
+  font-family: InterBold, serif;
+  font-size: 1.875rem;
+}
+.statistic_name{
+  font-family: Inter, serif;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
 .popup__bg{
   position: fixed;
   top: 0;
@@ -109,6 +122,45 @@ main {
   right: 30px;
   cursor: pointer;
 
+}
+.container{
+  opacity: 1;
+  pointer-events: all;
+}
+.container.inactive{
+  opacity: 0;
+  pointer-events: none;
+}
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  /*border-top: 16px  solid black;
+  border-bottom: 16px  solid red ;
+  border-right: 16px  solid white; */
+  border-left: 5px solid blue;
+  position: fixed;
+  top: 40%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Setting up animation in any browser */
+  animation: spin 2s linear infinite;
+  opacity: 1;
+}
+.loader.inactive{
+  opacity: 0;
+}
+/* browser configuration */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 .popup{
   position: absolute;
