@@ -3521,7 +3521,6 @@ let currentWord = '';
 let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
 let closePopupButton = document.querySelector('.close__popup');
-let statsButton = document.querySelector('.stats');
 
 var flag = 0;
 
@@ -3860,10 +3859,6 @@ document.addEventListener('click', (e) => {
         popupBg.classList.remove('active');
     }
 });
-statsButton.addEventListener('click', ()=>{
-    popupBg.classList.add('active');
-    popup.classList.add('active');
-})
 
 
 function getRandomIndex (maxLength) {
