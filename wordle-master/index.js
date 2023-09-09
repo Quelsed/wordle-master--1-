@@ -3521,8 +3521,12 @@ let closePopupButton = document.querySelector('.close__popup');
 let statsButton = document.querySelector('.stats');
 let addButton = document.querySelector('.button__add');
 let rightWord = document.querySelector('.right-word');
+let loader = document.querySelector('.loader');
+let container = document.querySelector('.container');
+let statistics = document.querySelectorAll('div.statistic_element')
 
 let wordText = document.getElementById('word');
+
 // Get everything setup and the game responding to user actions.
 const init = () => {
 
@@ -3585,7 +3589,7 @@ const checkGuess = (guess, word) => {
       document
         .querySelector(`[data-key='${letter}']`)
         .setAttribute('data-status', 'valid');
-      
+
         remainingWordLetters.push(false);
         remainingGuessLetters.push(false);
     } else {
@@ -3605,7 +3609,7 @@ const checkGuess = (guess, word) => {
         .querySelector(`li:nth-child(${remainingGuessLetters.indexOf(letter) + 1})`);
 
       column.setAttribute('data-status', 'invalid');
-      
+
       const keyboardKey = document.querySelector(`[data-key='${letter}']`);
 
       if (keyboardKey.getAttribute('data-status') !== 'valid') {
@@ -3618,7 +3622,7 @@ const checkGuess = (guess, word) => {
   // that are absent from the word.
   guessLetters.forEach(letter => {
     const keyboardKey = document.querySelector(`[data-key='${letter}']`);
-    
+
     if (keyboardKey.getAttribute('data-status') === 'empty') {
       keyboardKey.setAttribute('data-status', 'none');
     }
@@ -3626,20 +3630,18 @@ const checkGuess = (guess, word) => {
 
   if (guess === word){
     showMessage('Котлыйм, дөрес!');
-    wordText.innerHTML = word;
-    popupBg.classList.add('active');
-    popup.classList.add('active');
+    updateValues(true);
+    translate(word);
     return;
   }
-  
+
 
   history.push(currentWord);
 
   if (history.length === MAX_NUMBER_OF_ATTEMPTS && guess!==word){
     showMessage('Кызганыч, сез сүз тапмадыгыз.');
-    wordText.innerHTML = word;
-    popupBg.classList.add('active');
-    popup.classList.add('active');
+    updateValues(false);
+    translate(word)
     return;
   }
   currentWord = '';
@@ -3650,7 +3652,23 @@ const onKeyboardButtonClick = (event) => {
     onKeyDown(event.target.getAttribute('data-key'));
   }
 }
-
+const updateValues = (win) =>{
+    let streak = localStorage.getItem('streak_count');
+    let max_streak = localStorage.getItem('max_streak');
+    if(+streak > +max_streak){
+        max_streak = streak;
+        localStorage.setItem('max_streak', max_streak);
+    }
+    if(win){
+        const victories = localStorage.getItem('victories_count');
+        localStorage.setItem('victories_count', +victories + 1);
+        localStorage.setItem('streak_count', +streak + 1);
+    }else{
+        const loses = localStorage.getItem('loses_count');
+        localStorage.setItem('loses_count', +loses + 1);
+        localStorage.setItem('streak_count', '0');
+    }
+}
 const onKeyDown = (key) => {
   // Don't allow more than 6 attempts to guess the word
   if (history.length >= MAX_NUMBER_OF_ATTEMPTS) return;
@@ -3675,10 +3693,10 @@ const onKeyDown = (key) => {
     // Clear the column of its content
     targetColumn.textContent = '';
     targetColumn.setAttribute('data-status', 'empty');
-    
+
     // Remove the last letter from the currentWord
     currentWord = currentWord.slice(0, -1);
-    
+
     return;
   }
 
@@ -3690,7 +3708,7 @@ const onKeyDown = (key) => {
 
     if (currentWord.length === 5 && WORD_LIST.includes(currentWord)) {
       checkGuess(currentWord, WORD_OF_THE_DAY);
-    } 
+    }
     else {
       currentRow.setAttribute('data-animation', 'invalid');
       showMessage('Шундый сүз бармыни?');
@@ -3714,7 +3732,52 @@ const onKeyDown = (key) => {
     targetColumn.setAttribute('data-animation', 'pop');
   }
 }
+const translate = (word) => {
+    loader.classList.remove('inactive');
+    popupBg.classList.add('active');
+    popup.classList.add('active');
+    container.classList.add('inactive');
+    let url = `https://translate.tatar/translate?lang=${parseInt(1)}&text=${encodeURI(word)}`
+    let translation = null;
+    const parser = new DOMParser();
+    fetch(url)
+        .then(response => response.text())
+        .then(function (data) {
+            translation = parser.parseFromString(data, 'text/xml');
+            try{
+                translation = translation.getElementsByTagName('translation')[0].childNodes[0].data;
+                renderStats(word, translation);
+            }catch (e){
+                translate_other(word)
+            }
+        });
+}
+const translate_other = (word) => {
+    loader.classList.remove('inactive');
+    popupBg.classList.add('active');
+    popup.classList.add('active');
+    container.classList.add('inactive');
+    let url = `https://translate.tatar/translate?lang=${parseInt(1)}&text=${encodeURI(word)}`
+    fetch(url)
+        .then(response => response.text())
+        .then(function(data){
+            renderStats(word, data);
+        })
+}
+const renderStats = (word, translation_of_the_word) => {
+    loader.classList.add('inactive');
+    container.classList.remove('inactive');
+    wordText.innerHTML = word + ' - ' + translation_of_the_word;
+    statistics[0].querySelector('.statistic_value').innerHTML = +localStorage.getItem('victories_count');
+    if(+localStorage.getItem('loses_count') === 0){
+        statistics[1].querySelector('.statistic_value').innerHTML = '0%';
+    }else{
+        statistics[1].querySelector('.statistic_value').innerHTML = +localStorage.getItem('victories_count') / +localStorage.getItem('loses_count') * 100 + '%';
+    }
+    statistics[2].querySelector('.statistic_value').innerHTML = +localStorage.getItem('streak_count');
+    statistics[3].querySelector('.statistic_value').innerHTML = +localStorage.getItem('max_streak');
 
+}
 const generateBoard = (board, rows = 6, columns = 5, keys = [], keyboard = false) => {
   for (let row = 0; row < rows; row++) {
     const elmRow = document.createElement('ul');
@@ -3760,22 +3823,28 @@ document.addEventListener('DOMContentLoaded', init);
 closePopupButton.addEventListener('click', () => {
     popupBg.classList.remove('active');
     popup.classList.remove('active');
-    rightWord.classList.remove('inactive');
-    addButton.classList.remove('inactive');
+    setTimeout(function () {
+        rightWord.classList.remove('inactive');
+        addButton.classList.remove('inactive');
+    }, 500)
+
 });
 document.addEventListener('click', (e) => {
     if(e.target === popupBg){
         popupBg.classList.remove('active');
         popup.classList.remove('active');
-        rightWord.classList.remove('inactive');
-        addButton.classList.remove('inactive');
+        setTimeout(function() {
+            rightWord.classList.remove('inactive');
+            addButton.classList.remove('inactive');
+        }, 500)
     }
 });
 statsButton.addEventListener('click', ()=>{
-    popupBg.classList.add('active');
-    popup.classList.add('active');
+    loader.classList.add('inactive')
     addButton.classList.add('inactive')
     rightWord.classList.add('inactive');
+    popupBg.classList.add('active');
+    popup.classList.add('active');
 })
 addButton.addEventListener('click', () => {
 

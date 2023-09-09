@@ -53,15 +53,30 @@
   <div class="popup__bg">
     <form class="popup">
       <span class="close__popup">x</span>
-      <h2 class="popup__title">Статистика</h2>
-      <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <p class="right-word" id="word">Слово - перевод</p>
-      <a class="button__add"><span>Добавить</span></a>
+      <div class="loader"></div>
+      <div class="container">
+        <h2 class="popup__title">Статистика</h2>
+        <div class="statistic_container">
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Слов отгадано</div>
+          </div>
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Процент побед</div>
+          </div>
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Череда побед</div>
+          </div>
+          <div class="statistic_element">
+            <div class="statistic_value"></div>
+            <div class="statistic_name">Лучшая череда побед</div>
+          </div>
+        </div>
+        <p class="right-word" id="word">Слово - перевод</p>
+        <a class="button__add"><span>Добавить</span></a>
+      </div>
     </form>
   </div>
   <script type="text/javascript" src="index.js"></script>
