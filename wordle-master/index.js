@@ -3728,7 +3728,7 @@ const onKeyDown = (key) => {
     }
     else {
       currentRow.setAttribute('data-animation', 'invalid');
-      showMessage('Шундый сүз бармыни?');
+      showMessage('Мондый сүз исемлектә юк.');
     }
     return;
   }
