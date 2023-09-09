@@ -84,6 +84,33 @@ header { border-bottom: 1px solid var(--color-gray-dark); }
         width: 100%;
         margin-bottom: 24px
     }
+    .how-to-play-button{
+        display: flex;
+        padding: 0px 74px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 360px;
+        border: 1px solid #000;
+        background: #FFF;
+        text-decoration: none;
+        margin: 0px 10px 8px;
+        cursor: pointer;
+
+    }
+
+    .play-button{
+        display: flex;
+        height: 60px;
+        padding: 18px 93px 18px 94px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 360px;
+        border: 1px solid #000;
+        background: #AF3246;
+        text-decoration: none;
+        margin: 0px 10px 8px;
+    }
 }
 @media (width >= 760px) {
     .buttons{
@@ -96,48 +123,49 @@ header { border-bottom: 1px solid var(--color-gray-dark); }
         width: 100%;
         margin-bottom: 24px
     }
+    .how-to-play-button{
+        display: flex;
+        padding: 0px 40px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 360px;
+        border: 1px solid #000;
+        background: #FFF;
+        text-decoration: none;
+        margin: 0px 10px 8px;
+        cursor: pointer;
+
+    }
+    .play-button{
+        display: flex;
+        height: 60px;
+        padding: 18px 64px 18px 65px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 360px;
+        border: 1px solid #000;
+        background: #AF3246;
+        text-decoration: none;
+        margin: 0px 10px 8px;
+    }
 }
 
 .cuzimg{
     margin-top: 90px;
 }
 
-.how-to-play-button{
-    display: flex;
-    padding: 0px 40px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 360px;
-    border: 1px solid #000;
-    background: #FFF;
-    text-decoration: none;
-    margin: 0px 10px 8px;
-    cursor: pointer;
 
-}
-.how-to-play-button-text{
-    color: #000;
+.button-play-text{
+    color: #ffffff;
     font-family: Inter, serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
-.play-button{
-    display: flex;
-    height: 60px;
-    padding: 18px 64px 18px 65px;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    border-radius: 360px;
-    border: 1px solid #000;
-    background: #AF3246;
-    text-decoration: none;
-    margin: 0px 10px 8px;
-}
-.button-play-text{
-    color: #ffffff;
+.how-to-play-button-text{
+    color: #000;
     font-family: Inter, serif;
     font-size: 18px;
     font-style: normal;
