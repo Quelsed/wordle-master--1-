@@ -3527,7 +3527,7 @@ var flag = 0;
 
 const init = () => {
 
-  const KEYBOARD_KEYS = ['ЙӨУКЕНГШЩӘЗҺҮЁ', 'ФЫВАПРОЛДЖҢХЦЭ', 'ЯЧСМИТҖБЮЬЪ'];
+  const KEYBOARD_KEYS = ['ЙӨУКЕНГШЩӘЗҺҮ', 'ФЫВАПРОЛДЖҢХЦЭ', 'ЯЧСМИТҖБЮЬЪ'];
 
 
   const gameBoard1 = document.querySelector('#board1');
@@ -3789,7 +3789,7 @@ const onKeyDown = (key) => {
     }
     else {
         currentRow.setAttribute('data-animation', 'invalid');
-        showMessage('Шундый сүз бармыни?');
+        showMessage('Мондый сүз исемлектә юк.');
     }
     return;
   }
@@ -3800,7 +3800,7 @@ const onKeyDown = (key) => {
 
   const upperCaseLetter = key.toUpperCase();
 
-  if (/^[А-Ә]$/.test(upperCaseLetter) || /^[А-Я]$/.test(upperCaseLetter) || /^[А-Ө]$/.test(upperCaseLetter) || /^[Ё]$/.test(upperCaseLetter)) {
+  if (/^[А-Ә]$/.test(upperCaseLetter) || /^[А-Я]$/.test(upperCaseLetter) || /^[А-Ө]$/.test(upperCaseLetter)) {
     currentWord += upperCaseLetter;
 
     targetColumn.textContent = upperCaseLetter;
@@ -3864,3 +3864,25 @@ document.addEventListener('click', (e) => {
 function getRandomIndex (maxLength) {
   return Math.floor(Math.random() * Math.floor(maxLength));
 }
+
+document.getElementById("open-modal-btn").addEventListener("click", function() {
+  document.getElementById("my-modal").classList.add("open")
+})
+
+document.getElementById("close-my-modal-btn").addEventListener("click", function() {
+  document.getElementById("my-modal").classList.remove("open")
+})
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === "Escape") {
+      document.getElementById("my-modal").classList.remove("open")
+  }
+});
+
+document.querySelector("#my-modal .modal__box").addEventListener('click', event => {
+  event._isClickWithInModal = true;
+});
+document.getElementById("my-modal").addEventListener('click', event => {
+  if (event._isClickWithInModal) return;
+  event.currentTarget.classList.remove('open');
+});
