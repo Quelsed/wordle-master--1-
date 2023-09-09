@@ -42,7 +42,6 @@ header { border-bottom: 1px solid var(--color-gray-dark); display: inline}
   align-items: center;
 }
 .header_title {
-  margin-right: 50px;
   padding: 0;
   text-align: center;
   text-decoration: none;
@@ -67,6 +66,12 @@ main {
 .dictionary{
   margin-left: 20px;
   cursor: pointer;
+}
+.dictionary2 {
+  margin-left: 20px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
 }
 .button__add{
   opacity: 1;

@@ -3511,7 +3511,7 @@ console.log(WORD_OF_THE_DAY);
 // In case we want to make the game difficult or easier
 const MAX_NUMBER_OF_ATTEMPTS = 6;
 
-const history = [];
+let history = [];
 let currentWord = '';
 
 let popupBg = document.querySelector('.popup__bg');
@@ -3538,7 +3538,7 @@ let loader = document.querySelector('.loader');
 let container = document.querySelector('.container');
 let statistics = document.querySelectorAll('div.statistic_element');
 
-
+let restart = document.querySelector('.button__restart');
 let wordText = document.getElementById('word');
 
 // Get everything setup and the game responding to user actions.
@@ -3918,6 +3918,13 @@ addButton.addEventListener('click', () => {
 function getRandomIndex (maxLength) {
   return Math.floor(Math.random() * Math.floor(maxLength));
 }
+
+restart.addEventListener('click', () => {
+    popupBg.classList.remove('active');
+    popup.classList.remove('active');
+    // event.preventDefault();
+    location.reload();
+})
 
 document.getElementById("open-modal-btn").addEventListener("click", function() {
   document.getElementById("my-modal").classList.add("open")
