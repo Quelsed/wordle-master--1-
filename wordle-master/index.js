@@ -3506,7 +3506,6 @@ const WORD_GUESS_LIST = ["КАЗАН",
 ];
 const INDEX = getRandomIndex(WORD_GUESS_LIST.length);
 const WORD_OF_THE_DAY = WORD_GUESS_LIST[INDEX];
-const FAV_WORDS = [];
 console.log(WORD_OF_THE_DAY);
 
 // In case we want to make the game difficult or easier
@@ -3518,12 +3517,27 @@ let currentWord = '';
 let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
 let closePopupButton = document.querySelector('.close__popup');
+
+let popupBgDict = document.querySelector('.dict_popup__bg');
+let popupDict = document.querySelector('.dict_popup');
+let closePopupButtonDict = document.querySelector('.dict_close__popup');
+let dictContainer = document.querySelector('.dict_container')
+
 let statsButton = document.querySelector('.stats');
+let dict = document.querySelector('.dictionary');
+
+let noWords = document.querySelector('.no_words')
+
 let addButton = document.querySelector('.button__add');
+
+
 let rightWord = document.querySelector('.right-word');
+let rightWordTitle = document.querySelector('.right-word-title');
+
 let loader = document.querySelector('.loader');
 let container = document.querySelector('.container');
-let statistics = document.querySelectorAll('div.statistic_element')
+let statistics = document.querySelectorAll('div.statistic_element');
+
 
 let wordText = document.getElementById('word');
 
@@ -3629,10 +3643,11 @@ const checkGuess = (guess, word) => {
   });
 
   if (guess === word){
-    showMessage('Котлыйм, дөрес!');
-    updateValues(true);
-    translate(word);
-    return;
+      sound(word)
+      showMessage('Котлыйм, дөрес!');
+      updateValues(true);
+      translate(word);
+      return;
   }
 
 
@@ -3646,7 +3661,9 @@ const checkGuess = (guess, word) => {
   }
   currentWord = '';
 }
+const sound = (phrase) => {
 
+};
 const onKeyboardButtonClick = (event) => {
   if (event.target.nodeName === 'LI') {
     onKeyDown(event.target.getAttribute('data-key'));
@@ -3655,10 +3672,6 @@ const onKeyboardButtonClick = (event) => {
 const updateValues = (win) =>{
     let streak = localStorage.getItem('streak_count');
     let max_streak = localStorage.getItem('max_streak');
-    if(+streak > +max_streak){
-        max_streak = streak;
-        localStorage.setItem('max_streak', max_streak);
-    }
     if(win){
         const victories = localStorage.getItem('victories_count');
         localStorage.setItem('victories_count', +victories + 1);
@@ -3667,6 +3680,10 @@ const updateValues = (win) =>{
         const loses = localStorage.getItem('loses_count');
         localStorage.setItem('loses_count', +loses + 1);
         localStorage.setItem('streak_count', '0');
+    }
+    if(+streak > +max_streak){
+        max_streak = streak;
+        localStorage.setItem('max_streak', max_streak);
     }
 }
 const onKeyDown = (key) => {
@@ -3736,6 +3753,7 @@ const translate = (word) => {
     loader.classList.remove('inactive');
     popupBg.classList.add('active');
     popup.classList.add('active');
+    popup.classList.add('loading');
     container.classList.add('inactive');
     let url = `https://translate.tatar/translate?lang=${parseInt(1)}&text=${encodeURI(word)}`
     let translation = null;
@@ -3746,7 +3764,7 @@ const translate = (word) => {
             translation = parser.parseFromString(data, 'text/xml');
             try{
                 translation = translation.getElementsByTagName('translation')[0].childNodes[0].data;
-                renderStats(word, translation);
+                renderStats(word, translation, false);
             }catch (e){
                 translate_other(word)
             }
@@ -3756,27 +3774,54 @@ const translate_other = (word) => {
     loader.classList.remove('inactive');
     popupBg.classList.add('active');
     popup.classList.add('active');
+    popup.classList.add('loading')
     container.classList.add('inactive');
     let url = `https://translate.tatar/translate?lang=${parseInt(1)}&text=${encodeURI(word)}`
     fetch(url)
         .then(response => response.text())
         .then(function(data){
-            renderStats(word, data);
+            renderStats(word, data, false);
         })
 }
-const renderStats = (word, translation_of_the_word) => {
-    loader.classList.add('inactive');
-    container.classList.remove('inactive');
-    wordText.innerHTML = word + ' - ' + translation_of_the_word;
-    statistics[0].querySelector('.statistic_value').innerHTML = +localStorage.getItem('victories_count');
-    if(+localStorage.getItem('loses_count') === 0){
-        statistics[1].querySelector('.statistic_value').innerHTML = '0%';
+const renderStats = (word, translation_of_the_word, isButtonStatsClicked) => {
+    if(!isButtonStatsClicked){
+        loader.classList.add('inactive');
+        popup.classList.remove('loading')
+        container.classList.remove('inactive');
+        wordText.innerHTML = word + ' - ' + translation_of_the_word.toLowerCase();
+        localStorage.setItem('translation', translation_of_the_word);
     }else{
-        statistics[1].querySelector('.statistic_value').innerHTML = +localStorage.getItem('victories_count') / +localStorage.getItem('loses_count') * 100 + '%';
+        loader.classList.add('inactive')
+        addButton.classList.add('inactive')
+        rightWord.classList.add('inactive');
+        rightWordTitle.classList.add('inactive');
+        popupBg.classList.add('active');
+        popup.classList.remove('loading');
+        popup.classList.add('active');
+
     }
+    statistics[0].querySelector('.statistic_value').innerHTML = +localStorage.getItem('victories_count');
+    statistics[1].querySelector('.statistic_value').innerHTML = Math.floor(+localStorage.getItem('victories_count') /
+        (+localStorage.getItem('victories_count') + +localStorage.getItem('loses_count')) * 100) + '%';
     statistics[2].querySelector('.statistic_value').innerHTML = +localStorage.getItem('streak_count');
     statistics[3].querySelector('.statistic_value').innerHTML = +localStorage.getItem('max_streak');
 
+}
+const generateVocabulary = (wordsArray) => {
+    dictContainer.innerHTML = "";
+    const array = wordsArray.filter((word) => word !== "");
+    array.forEach((elem) => {
+        const container = document.createElement('div');
+        container.classList.add("vocabulary_container");
+        const word = document.createElement("p");
+        word.classList.add('vocabulary_word');
+        const divider = document.createElement('hr');
+        divider.classList.add('vocabulary_divider');
+        word.innerHTML = elem;
+        container.appendChild(word);
+        container.appendChild(divider);
+        dictContainer.appendChild(container);
+    });
 }
 const generateBoard = (board, rows = 6, columns = 5, keys = [], keyboard = false) => {
   for (let row = 0; row < rows; row++) {
@@ -3825,29 +3870,49 @@ closePopupButton.addEventListener('click', () => {
     popup.classList.remove('active');
     setTimeout(function () {
         rightWord.classList.remove('inactive');
+        rightWordTitle.classList.remove('inactive');
         addButton.classList.remove('inactive');
     }, 500)
 
 });
+
+
+closePopupButtonDict.addEventListener('click', () => {
+    popupBgDict.classList.remove('active');
+    popupDict.classList.remove('active');
+});
+
+
 document.addEventListener('click', (e) => {
     if(e.target === popupBg){
         popupBg.classList.remove('active');
         popup.classList.remove('active');
         setTimeout(function() {
             rightWord.classList.remove('inactive');
+            rightWordTitle.classList.remove('inactive');
             addButton.classList.remove('inactive');
         }, 500)
     }
 });
+
+document.addEventListener('click', (e) => {
+    if(e.target === popupBgDict){
+        popupBgDict.classList.remove('active');
+        popupDict.classList.remove('active');
+    }
+});
+
 statsButton.addEventListener('click', ()=>{
-    loader.classList.add('inactive')
-    addButton.classList.add('inactive')
-    rightWord.classList.add('inactive');
-    popupBg.classList.add('active');
-    popup.classList.add('active');
+    renderStats('', '', true);
 })
 addButton.addEventListener('click', () => {
-
+    noWords.classList.add('inactive');
+    let favWords = localStorage.getItem('words');
+    if (favWords === null){
+        localStorage.setItem('words', currentWord + ' - ' + localStorage.getItem('translation') + '$');
+    }else{
+        localStorage.setItem('words', favWords + currentWord + ' - ' + localStorage.getItem('translation') + '$');
+    }
 });
 
 function getRandomIndex (maxLength) {
@@ -3857,10 +3922,14 @@ function getRandomIndex (maxLength) {
 document.getElementById("open-modal-btn").addEventListener("click", function() {
   document.getElementById("my-modal").classList.add("open")
 })
-
+dict.addEventListener('click', () => {
+    popupBgDict.classList.add('active');
+    popupDict.classList.add('active');
+    generateVocabulary(localStorage.getItem('words').split('$'));
+});
 document.getElementById("close-my-modal-btn").addEventListener("click", function() {
   document.getElementById("my-modal").classList.remove("open")
-})
+});
 
 window.addEventListener('keydown', (e) => {
   if (e.key === "Escape") {

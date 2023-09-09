@@ -39,6 +39,16 @@
     </div>
 
   </header>
+
+  <div class="dict_popup__bg">
+      <form class="dict_popup">
+          <span class="dict_close__popup">x</span>
+          <h2 class="dict_popup__title">Словарь избранных слов</h2>
+          <p class="no_words">Нет избранных слов</p>
+          <div class="dict_container"></div>
+      </form>
+  </div>
+
   <main>
     <section id="board">
     </section>
@@ -74,8 +84,11 @@
             <div class="statistic_name">Лучшая череда побед</div>
           </div>
         </div>
-        <p class="right-word" id="word">Слово - перевод</p>
-        <a class="button__add"><span>Добавить</span></a>
+          <div class="right-word-container">
+              <p class="right-word-title">Загаданное слово:</p>
+              <p class="right-word" id="word">Слово - перевод</p>
+          </div>
+        <div class="button__add"><span class="button__add-text">Добавить в избранное</span></div>
       </div>
     </form>
   </div>
