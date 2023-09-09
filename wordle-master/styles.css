@@ -1,5 +1,6 @@
 :root {
   --color-black: #121213;
+  --color-iziblack: #0f172a;
   --color-white: #fff;
   --color-green: #538d4e;
   --color-yellow: #B59F3B;
@@ -11,7 +12,7 @@ html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 
 body {
-  background: var(--color-black);
+  background: var(--color-iziblack);
   color: var(--color-white);
 
   font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -25,7 +26,7 @@ body {
   gap: 2rem;
 }
 
-header { border-bottom: 1px solid var(--color-gray-dark); }
+header { border-bottom: 1px solid var(--color-gray-light); }
 
 h1 {
   margin: 10px 0;
@@ -90,7 +91,7 @@ main {
 
 [data-status],
 [data-key] {
-  border: 2px solid var(--color-gray-dark);
+  border: 2px solid var(--color-gray-light);
   font-weight: 700;
   font-size: 2rem;
   line-height: 2rem;

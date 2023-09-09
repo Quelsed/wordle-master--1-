@@ -2424,7 +2424,7 @@ let currentWord = '';
 // Get everything setup and the game responding to user actions.
 const init = () => {
 
-  const KEYBOARD_KEYS = ['ЙӨУКЕНГШЩӘЗҺҮЁ', 'ФЫВАПРОЛДЖҢХЦЭ', 'ЯЧСМИТҖБЮЬЪ'];
+  const KEYBOARD_KEYS = ['ЙӨУКЕНГШЩӘЗҺҮ', 'ФЫВАПРОЛДЖҢХЦЭ', 'ЯЧСМИТҖБЮЬЪ'];
 
   // Grab the gameboard and the keyboard
   const gameBoard = document.querySelector('#board');
@@ -2598,7 +2598,7 @@ const onKeyDown = (key) => {
 
   // Add the letter to the next empty column
   // if the provided letter is between A-Z
-  if (/^[А-Ә]$/.test(upperCaseLetter) || /^[А-Я]$/.test(upperCaseLetter) || /^[А-Ө]$/.test(upperCaseLetter) || /^[Ё]$/.test(upperCaseLetter)) {
+  if (/^[А-Ә]$/.test(upperCaseLetter) || /^[А-Я]$/.test(upperCaseLetter) || /^[А-Ө]$/.test(upperCaseLetter)) {
     currentWord += upperCaseLetter;
 
     targetColumn.textContent = upperCaseLetter;
