@@ -35,7 +35,7 @@ header { border-bottom: 1px solid var(--color-gray-dark); display: inline}
   opacity: 0;
 }
 h1 {
-  margin: 10px 0;
+  margin: 10px 0 10px 50px;
   padding: 0;
   text-align: center;
 }
@@ -51,10 +51,35 @@ main {
   margin-right: 20px;
   cursor: pointer;
 }
+.question{
+  margin-right: 10px;
+  cursor: pointer;
+}
 .dictionary{
   margin-left: 20px;
   cursor: pointer;
 }
+.button__add{
+  border-radius: 10px;
+  border-color: black;
+  border-width: 1px;
+  opacity: 1;
+  pointer-events: all;
+}
+.right-word{
+  opacity: 1;
+  pointer-events: all;
+}
+.right-word.inactive{
+  opacity: 0;
+  pointer-events: none;
+}
+.button__add.inactive{
+  opacity: 0;
+  pointer-events: none;
+}
+
+
 .popup__bg{
   position: fixed;
   top: 0;
@@ -88,6 +113,7 @@ main {
   padding: 25px;
   background: #ffffff;
   transition: 0.5s all;
+  border-radius: 10px;
 }
 .popup.active{
   transform: translate(-50%, -50%) scale(1);

@@ -2426,8 +2426,10 @@ let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
 let closePopupButton = document.querySelector('.close__popup');
 let statsButton = document.querySelector('.stats');
+let addButton = document.querySelector('.button__add');
+let rightWord = document.querySelector('.right-word');
 
-
+let wordText = document.getElementById('word');
 // Get everything setup and the game responding to user actions.
 const init = () => {
 
@@ -2531,6 +2533,7 @@ const checkGuess = (guess, word) => {
 
   if (guess === word){
     showMessage('Котлыйм, дөрес!');
+    wordText.innerHTML = word;
     popupBg.classList.add('active');
     popup.classList.add('active');
     return;
@@ -2541,6 +2544,7 @@ const checkGuess = (guess, word) => {
 
   if (history.length === MAX_NUMBER_OF_ATTEMPTS && guess!==word){
     showMessage('Кызганыч, сез сүз тапмадыгыз.');
+    wordText.innerHTML = word;
     popupBg.classList.add('active');
     popup.classList.add('active');
     return;
@@ -2663,16 +2667,26 @@ document.addEventListener('DOMContentLoaded', init);
 closePopupButton.addEventListener('click', () => {
     popupBg.classList.remove('active');
     popup.classList.remove('active');
+    rightWord.classList.remove('inactive');
+    addButton.classList.remove('inactive');
 });
 document.addEventListener('click', (e) => {
     if(e.target === popupBg){
         popupBg.classList.remove('active');
+        popup.classList.remove('active');
+        rightWord.classList.remove('inactive');
+        addButton.classList.remove('inactive');
     }
 });
 statsButton.addEventListener('click', ()=>{
     popupBg.classList.add('active');
     popup.classList.add('active');
+    addButton.classList.add('inactive')
+    rightWord.classList.add('inactive');
 })
+addButton.addEventListener('click', () => {
+
+});
 // Based on the max length of the Array. Return a random items index
 // within the Array's length.
 function getRandomIndex (maxLength) {
