@@ -3528,6 +3528,7 @@ let dict = document.querySelector('.dictionary');
 let noWords = document.querySelector('.no_words')
 
 let addButton = document.querySelector('.button__add');
+let addButtonText = document.querySelector('.button__add-text');
 
 
 let rightWord = document.querySelector('.right-word');
@@ -3888,6 +3889,8 @@ statsButton.addEventListener('click', ()=>{
     renderStats('', '', true);
 })
 addButton.addEventListener('click', () => {
+    addButtonText.innerHTML = 'Өстәлгән';
+    addButton.classList.add('no_cursor');
     noWords.classList.add('inactive');
     let favWords = localStorage.getItem('words');
     if (favWords === null){

@@ -112,7 +112,9 @@ main {
 .button__restart-text{
   font-family: Inter, serif;
 }
-
+.button__add.no_cursor{
+  pointer-events: none;
+}
 .right-word-title{
   font-family: Inter, serif;
   font-size: 18px;
