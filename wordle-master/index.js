@@ -3508,7 +3508,6 @@ const INDEX = getRandomIndex(WORD_GUESS_LIST.length);
 const WORD_OF_THE_DAY = WORD_GUESS_LIST[INDEX];
 console.log(WORD_OF_THE_DAY);
 
-// In case we want to make the game difficult or easier
 const MAX_NUMBER_OF_ATTEMPTS = 6;
 
 let history = [];
@@ -3541,20 +3540,16 @@ let statistics = document.querySelectorAll('div.statistic_element');
 let restart = document.querySelector('.button__restart');
 let wordText = document.getElementById('word');
 
-// Get everything setup and the game responding to user actions.
 const init = () => {
 
   const KEYBOARD_KEYS = ['ЙӨУКЕНГШЩӘЗҺҮ', 'ФЫВАПРОЛДЖҢХЦЭ', 'ЯЧСМИТҖБЮЬЪ'];
 
-  // Grab the game board and the keyboard
   const gameBoard = document.querySelector('#board');
   const keyboard = document.querySelector('#keyboard');
 
-  // Generate the game board and the keyboard
   generateBoard(gameBoard);
   generateBoard(keyboard, 3, 14, KEYBOARD_KEYS, true);
 
-  // Setup event listeners
   document.addEventListener('keydown', event => onKeyDown(event.key));
   gameBoard.addEventListener('animationend', event => event.target.setAttribute('data-animation', 'idle'));
   keyboard.addEventListener('click', onKeyboardButtonClick);
@@ -3567,7 +3562,6 @@ const showMessage = (message) => {
   toast.className = 'toast';
 
   document.querySelector('.toaster ul').prepend(toast);
-  //Здесь изменяется время отображения сообщения
 
   setTimeout(() => toast.classList.add('fade'), 2000);
 
@@ -3580,21 +3574,16 @@ const checkGuess = (guess, word) => {
   const remainingWordLetters = [];
   const remainingGuessLetters = [];
 
-  // Find the current active row
   const currentRow = document.querySelector(`#board ul[data-row='${history.length}']`);
 
-  // First, let's get all the columns in the current row set up with some base values
   currentRow.querySelectorAll('li').forEach((element, index) => {
     element.setAttribute('data-status', 'none');
     element.setAttribute('data-animation', 'flip');
 
-    // Each letter should start its animation twice as late as the letter before it
     element.style.animationDelay = `${index * 300}ms`;
     element.style.transitionDelay = `${index * 400}ms`;
   });
 
-  // Second iteration finds all the valid letters
-  // and creates a list of leftover letters
   wordLetters.forEach((letter, index) => {
     if (guessLetters[index] === letter) {
       currentRow.querySelector(`li:nth-child(${index + 1})`)
@@ -3612,10 +3601,7 @@ const checkGuess = (guess, word) => {
     }
   });
 
-  // Third iteration finds all the misplaced letters
   remainingWordLetters.forEach(letter => {
-    // Skip this iteration, since the letter
-    // was already found in the previous phase
     if (letter === false) return;
 
     if (remainingGuessLetters.indexOf(letter) !== -1) {
@@ -3632,8 +3618,6 @@ const checkGuess = (guess, word) => {
     }
   });
 
-  // Fourth iteration finds all the letters on the keyboard
-  // that are absent from the word.
   guessLetters.forEach(letter => {
     const keyboardKey = document.querySelector(`[data-key='${letter}']`);
 
@@ -3687,31 +3671,22 @@ const updateValues = (win) =>{
     }
 }
 const onKeyDown = (key) => {
-  // Don't allow more than 6 attempts to guess the word
   if (history.length >= MAX_NUMBER_OF_ATTEMPTS) return;
 
-  // Find the current active row
   const currentRow = document.querySelector(`#board ul[data-row='${history.length}']`);
 
-  // Find the next empty column in the current active row
   let targetColumn = currentRow.querySelector('[data-status="empty"]');
 
   if (key === BACKSPACE_KEY) {
     if (targetColumn === null) {
-      // Get the last column of the current active row
-      // as we are on the last column
       targetColumn = currentRow.querySelector('li:last-child');
     } else {
-      // Find the previous column, otherwise get the first column
-      // so we always have a column to operate on
       targetColumn = targetColumn.previousElementSibling ?? targetColumn;
     }
 
-    // Clear the column of its content
     targetColumn.textContent = '';
     targetColumn.setAttribute('data-status', 'empty');
 
-    // Remove the last letter from the currentWord
     currentWord = currentWord.slice(0, -1);
 
     return;
@@ -3734,13 +3709,10 @@ const onKeyDown = (key) => {
   }
 
 
-  // We have reached the 5-letter limit for the guess word
   if (currentWord.length >= 5) return;
 
   const upperCaseLetter = key.toUpperCase();
 
-  // Add the letter to the next empty column
-  // if the provided letter is between A-Z
   if (/^[А-Ә]$/.test(upperCaseLetter) || /^[А-Я]$/.test(upperCaseLetter) || /^[А-Ө]$/.test(upperCaseLetter)) {
     currentWord += upperCaseLetter;
 
@@ -3844,7 +3816,6 @@ const generateBoard = (board, rows = 6, columns = 5, keys = [], keyboard = false
         elmColumn.setAttribute('data-key', key);
       }
 
-      // Skip adding any keyboard keys to the UI that are empty
       if (keyboard && elmColumn.textContent === '') continue;
 
       elmRow.appendChild(elmColumn);
@@ -3866,8 +3837,6 @@ const generateBoard = (board, rows = 6, columns = 5, keys = [], keyboard = false
   }
 }
 
-// Call the initialization function when the DOM is loaded to get
-// everything setup and the game responding to user actions.
 document.addEventListener('DOMContentLoaded', init);
 closePopupButton.addEventListener('click', () => {
     popupBg.classList.remove('active');
@@ -3926,7 +3895,6 @@ function getRandomIndex (maxLength) {
 restart.addEventListener('click', () => {
     popupBg.classList.remove('active');
     popup.classList.remove('active');
-    // event.preventDefault();
     location.reload();
 })
 

@@ -3543,7 +3543,6 @@ const init = () => {
   generateBoard(gameBoard2);
   generateBoard(keyboard2, 3, 14, KEYBOARD_KEYS, true);
 
-  // Setup event listeners
   document.addEventListener('keydown', event => onKeyDown(event.key));
   gameBoard1.addEventListener('animationend', event => event.target.setAttribute('data-animation', 'idle'));
   keyboard1.addEventListener('click', onKeyboardButtonClick);
@@ -3562,7 +3561,7 @@ const showMessage = (message) => {
     toast.className = 'toast';
 
     document.querySelector('.toaster ul').prepend(toast);
-    //Здесь изменяется время отображения сообщения
+    
 
     setTimeout(() => toast.classList.add('fade'), 2000);
 
@@ -3575,17 +3574,17 @@ const checkGuess = (guess, word) => {
   const remainingWordLetters = [];
   const remainingGuessLetters = [];
 
-  // Find the current active row
+  
   const currentRow = document.querySelector(`#board1 ul[data-row='${history.length}']`);
   const currentRow2 = document.querySelector(`#board2 ul[data-row='${history2.length}']`);
-  // First, let's get all the columns in the current row set up with some base values
+
   if (flag === 0)
   {
       currentRow.querySelectorAll('li').forEach((element, index) => {
           element.setAttribute('data-status', 'none');
           element.setAttribute('data-animation', 'flip');
 
-          // Each letter should start its animation twice as late as the letter before it
+          
           element.style.animationDelay = `${index * 300}ms`;
           element.style.transitionDelay = `${index * 400}ms`;
       });
@@ -3596,14 +3595,12 @@ const checkGuess = (guess, word) => {
           element.setAttribute('data-status', 'none');
           element.setAttribute('data-animation', 'flip');
 
-          // Each letter should start its animation twice as late as the letter before it
+          
           element.style.animationDelay = `${index * 300}ms`;
           element.style.transitionDelay = `${index * 400}ms`;
       });
   }
 
-  // Second iteration finds all the valid letters
-  // and creates a list of leftover letters
   wordLetters.forEach((letter, index) => {
     if (guessLetters[index] === letter) {
       if (flag === 0)
@@ -3611,9 +3608,7 @@ const checkGuess = (guess, word) => {
           currentRow.querySelector(`li:nth-child(${index + 1})`)
               .setAttribute('data-status', 'valid');
 
-          // document
-          //     .querySelector(`[data-key='${letter}']`)
-          //     .setAttribute('data-status', 'valid');
+
 
           remainingWordLetters.push(false);
           remainingGuessLetters.push(false);
@@ -3623,9 +3618,6 @@ const checkGuess = (guess, word) => {
           currentRow2.querySelector(`li:nth-child(${index + 1})`)
               .setAttribute('data-status', 'valid');
 
-          // document
-          //     .querySelector(`[data-key='${letter}']`)
-          //     .setAttribute('data-status', 'valid');
 
           remainingWordLetters.push(false);
           remainingGuessLetters.push(false);
@@ -3637,10 +3629,8 @@ const checkGuess = (guess, word) => {
     }
   });
 
-  // Third iteration finds all the misplaced letters
   remainingWordLetters.forEach(letter => {
-    // Skip this iteration, since the letter
-    // was already found in the previous phase
+    
     if (letter === false) return;
 
     if (remainingGuessLetters.indexOf(letter) !== -1) {
@@ -3650,9 +3640,7 @@ const checkGuess = (guess, word) => {
               .querySelector(`li:nth-child(${remainingGuessLetters.indexOf(letter) + 1})`);
           column.setAttribute('data-status', 'invalid');
           const keyboardKey = document.querySelector(`[data-key='${letter}']`);
-          // if (keyboardKey.getAttribute('data-status') !== 'valid') {
-          //     keyboardKey.setAttribute('data-status', 'invalid');
-          // }
+          
       }
       else
       {
@@ -3660,30 +3648,25 @@ const checkGuess = (guess, word) => {
               .querySelector(`li:nth-child(${remainingGuessLetters.indexOf(letter) + 1})`);
           column.setAttribute('data-status', 'invalid');
           const keyboardKey = document.querySelector(`[data-key='${letter}']`);
-          // if (keyboardKey.getAttribute('data-status') !== 'valid') {
-          //     keyboardKey.setAttribute('data-status', 'invalid');
-          // }
+          
       }
     }
   });
 
-  // Fourth iteration finds all the letters on the keyboard
-  // that are absent from the word.
+
   guessLetters.forEach(letter => {
     const keyboardKey = document.querySelector(`[data-key='${letter}']`);
-    // if (keyboardKey.getAttribute('data-status') === 'empty') {
-    //     keyboardKey.setAttribute('data-status', 'none');
-    // }
+    
   });
 
   if (guess === word){
     if (flag === 0)
     {
-        showMessage('Победа за первым игроком!');
+        showMessage('Беренче уенчы җиңде!');
     }
     else
     {
-        showMessage('Победа за вторым игроком!');
+        showMessage('Икенче уенчы җиңде!');
     }
     f = 1;
     return;
@@ -3715,10 +3698,10 @@ const onKeyboardButtonClick = (event) => {
 }
 
 const onKeyDown = (key) => {
-  // Don't allow more than 6 attempts to guess the word
+
   if (history.length >= MAX_NUMBER_OF_ATTEMPTS && history2.length >= MAX_NUMBER_OF_ATTEMPTS) return;
 
-  // Find the current active row
+
   let targetColumn;
   const currentRow = document.querySelector(`#board1 ul[data-row='${history.length}']`);
   const currentRow2 = document.querySelector(`#board2 ul[data-row='${history2.length}']`);
@@ -3726,28 +3709,25 @@ const onKeyDown = (key) => {
       targetColumn = currentRow.querySelector('[data-status="empty"]');
   else
       targetColumn = currentRow2.querySelector('[data-status="empty"]');
-  // Find the next empty column in the current active row
+
 
   if (key === BACKSPACE_KEY) {
     if (targetColumn === null) {
-      // Get the last column of the current active row
-      // as we are on the last column
+
       if (flag === 0)
           targetColumn = currentRow.querySelector('li:last-child');
       else
           targetColumn = currentRow2.querySelector('li:last-child');
     }
     else {
-      // Find the previous column, otherwise get the first column
-      // so we always have a column to operate on
+
       targetColumn = targetColumn.previousElementSibling ?? targetColumn;
     }
 
-    // Clear the column of its content
+
     targetColumn.textContent = '';
     targetColumn.setAttribute('data-status', 'empty');
 
-    // Remove the last letter from the currentWord
     currentWord = currentWord.slice(0, -1);
 
     return;
@@ -3770,7 +3750,7 @@ const onKeyDown = (key) => {
         {
             setTimeout(function ()
             {
-                showMessage('Передайте ход')
+                showMessage('Йөрешне күчерегез...')
                 timer.classList.add('active');
             }, 2000)
 
@@ -3805,7 +3785,7 @@ const onKeyDown = (key) => {
         {
             setTimeout(function ()
             {
-                showMessage('Передайте ход')
+                showMessage('Йөрешне күчерегез...')
                 timer.classList.add('active');
             }, 2000)
 
@@ -3867,7 +3847,6 @@ const generateBoard = (board, rows = 6, columns = 5, keys = [], keyboard = false
         elmColumn.setAttribute('data-key', key);
       }
 
-      // Skip adding any keyboard keys to the UI that are empty
       if (keyboard && elmColumn.textContent === '') continue;
 
       elmRow.appendChild(elmColumn);
