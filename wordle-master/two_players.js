@@ -3504,11 +3504,8 @@ const WORD_GUESS_LIST = ["КАЗАН",
     "ТӘРТӘ",
     "ТОЗАК"
 ];
-const WORD_TRANSLATES_LIST = [];
-const INDEX = getRandomIndex(WORD_LIST.length);
-const WORD_OF_THE_DAY = WORD_LIST[INDEX];
-const WORD_OF_THE_DAY_TRANSLATE = WORD_TRANSLATES_LIST[INDEX];
-const FAV_WORDS = [];
+const INDEX = getRandomIndex(WORD_GUESS_LIST.length);
+const WORD_OF_THE_DAY = WORD_GUESS_LIST[INDEX];
 console.log(WORD_OF_THE_DAY);
 
 
@@ -3663,11 +3660,11 @@ const checkGuess = (guess, word) => {
   if (guess === word){
     if (flag === 0)
     {
-        showMessage('Беренче уенчы җиңде!');
+        showMessage('Беренче уенчы җиңде! Серле сүз - '+ WORD_OF_THE_DAY);
     }
     else
     {
-        showMessage('Икенче уенчы җиңде!');
+        showMessage('Икенче уенчы җиңде! Серле сүз - '+ WORD_OF_THE_DAY);
     }
     f = 1;
     return;
@@ -3683,7 +3680,7 @@ const checkGuess = (guess, word) => {
       history2.push(currentWord);
       if (history2.length === MAX_NUMBER_OF_ATTEMPTS && guess!==word)
       {
-          showMessage('Беркем дә җиңмәде!');
+          showMessage('Беркем дә җиңмәде! Серле сүз - '+ WORD_OF_THE_DAY);
           f = 1;
           return;
       }
