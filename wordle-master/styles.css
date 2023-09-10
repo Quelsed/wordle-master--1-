@@ -62,6 +62,7 @@ main {
 .question{
   margin-right: 10px;
   cursor: pointer;
+  color: white;
 }
 .dictionary{
   margin-left: 20px;
@@ -473,7 +474,6 @@ main {
 .modal.open .modal__box {
   transform: scale(1);
 }
-
-.question {
-  color: white;
+.vocabulary_word{
+  cursor: pointer;
 }

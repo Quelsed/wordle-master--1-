@@ -3646,7 +3646,7 @@ const checkGuess = (guess, word) => {
       sound(word)
       showMessage('Котлыйм, дөрес!');
       updateValues(true);
-      translate(word);
+      translate(word.toLowerCase());
       return;
   }
 
@@ -3766,7 +3766,7 @@ const translate = (word) => {
                 translation = translation.getElementsByTagName('translation')[0].childNodes[0].data;
                 renderStats(word, translation, false);
             }catch (e){
-                translate_other(word)
+                translate_other(word.toLowerCase())
             }
         });
 }
@@ -3809,7 +3809,11 @@ const renderStats = (word, translation_of_the_word, isButtonStatsClicked) => {
 }
 const generateVocabulary = (wordsArray) => {
     dictContainer.innerHTML = "";
-    const array = wordsArray.filter((word) => word !== "");
+    const array = [... new Set(wordsArray.filter((word) => word !== ""))];
+
+    if(array.length > 0){
+        noWords.classList.add('inactive')
+    }
     array.forEach((elem) => {
         const container = document.createElement('div');
         container.classList.add("vocabulary_container");
@@ -3909,9 +3913,9 @@ addButton.addEventListener('click', () => {
     noWords.classList.add('inactive');
     let favWords = localStorage.getItem('words');
     if (favWords === null){
-        localStorage.setItem('words', currentWord + ' - ' + localStorage.getItem('translation') + '$');
+        localStorage.setItem('words', currentWord.toUpperCase() + ' - ' + localStorage.getItem('translation') + '$');
     }else{
-        localStorage.setItem('words', favWords + currentWord + ' - ' + localStorage.getItem('translation') + '$');
+        localStorage.setItem('words', favWords + currentWord.toUpperCase() + ' - ' + localStorage.getItem('translation') + '$');
     }
 });
 
@@ -3933,6 +3937,18 @@ dict.addEventListener('click', () => {
     popupBgDict.classList.add('active');
     popupDict.classList.add('active');
     generateVocabulary(localStorage.getItem('words').split('$'));
+    dictContainer.querySelectorAll('div').forEach((element) => {
+        console.log(element.innerHTML);
+        element.addEventListener('click', () => {
+            let words = localStorage.getItem('words').split("$");
+            const index = words.indexOf(element.querySelector('.vocabulary_word').innerHTML);
+            if(index > - 1){
+                words.splice(index, 1);
+            }
+            localStorage.setItem('words', words.join("$"));
+            generateVocabulary(words);
+        });
+    });
 });
 document.getElementById("close-my-modal-btn").addEventListener("click", function() {
   document.getElementById("my-modal").classList.remove("open")
