@@ -3762,13 +3762,14 @@ const onKeyDown = (key) => {
 
     if (currentWord.length === 5 && WORD_LIST.includes(currentWord) && flag === 0) {
         checkGuess(currentWord, WORD_OF_THE_DAY);
-        setTimeout(function (){
+
+        if (f === 0)
+        {
+            setTimeout(function (){
             document.querySelectorAll('.tab-panel').forEach(el =>{
                 el.style.display = 'none'
             });
-        }, 2000)
-        if (f === 0)
-        {
+            }, 2000)
             setTimeout(function ()
             {
                 showMessage('Передайте ход')
@@ -3797,13 +3798,13 @@ const onKeyDown = (key) => {
     else if (currentWord.length === 5 && WORD_LIST.includes(currentWord) && flag === 1)
     {
         checkGuess(currentWord, WORD_OF_THE_DAY);
-        setTimeout(function (){
+        if (f === 0)
+        {
+            setTimeout(function (){
             document.querySelectorAll('.tab-panel2').forEach(el =>{
                 el.style.display = 'none'
             });
-        }, 2000)
-        if (f === 0)
-        {
+            }, 2000)
             setTimeout(function ()
             {
                 showMessage('Передайте ход')
