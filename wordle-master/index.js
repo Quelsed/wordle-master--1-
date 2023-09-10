@@ -3646,7 +3646,11 @@ const checkGuess = (guess, word) => {
   currentWord = '';
 }
 const sound = (phrase) => {
-
+    // fetch('https://tat-tts.api.tatarby.tugantel.tatar/listening/?text=%D0%A1%D0%B0%D0%BB%D0%B0%D0%BC', {
+    //     headers: {
+    //         'Content-type': 'application/json',
+    //     },
+    // }).then(r => r).then(data => console.log(data));
 };
 const onKeyboardButtonClick = (event) => {
   if (event.target.nodeName === 'LI') {
@@ -3773,8 +3777,13 @@ const renderStats = (word, translation_of_the_word, isButtonStatsClicked) => {
 
     }
     statistics[0].querySelector('.statistic_value').innerHTML = +localStorage.getItem('victories_count');
-    statistics[1].querySelector('.statistic_value').innerHTML = Math.floor(+localStorage.getItem('victories_count') /
-        (+localStorage.getItem('victories_count') + +localStorage.getItem('loses_count')) * 100) + '%';
+    if(+localStorage.getItem('victories_count') + +localStorage.getItem('loses_count') === 0){
+        statistics[1].querySelector('.statistic_value').innerHTML = '0%'
+    }
+    else{
+        statistics[1].querySelector('.statistic_value').innerHTML = Math.floor(+localStorage.getItem('victories_count') /
+            (+localStorage.getItem('victories_count') + +localStorage.getItem('loses_count')) * 100) + '%';
+    }
     statistics[2].querySelector('.statistic_value').innerHTML = +localStorage.getItem('streak_count');
     statistics[3].querySelector('.statistic_value').innerHTML = +localStorage.getItem('max_streak');
 
@@ -3882,9 +3891,9 @@ addButton.addEventListener('click', () => {
     noWords.classList.add('inactive');
     let favWords = localStorage.getItem('words');
     if (favWords === null){
-        localStorage.setItem('words', currentWord.toUpperCase() + ' - ' + localStorage.getItem('translation') + '$');
+        localStorage.setItem('words', WORD_OF_THE_DAY.toUpperCase() + ' - ' + localStorage.getItem('translation') + '$');
     }else{
-        localStorage.setItem('words', favWords + currentWord.toUpperCase() + ' - ' + localStorage.getItem('translation') + '$');
+        localStorage.setItem('words', favWords + WORD_OF_THE_DAY.toUpperCase() + ' - ' + localStorage.getItem('translation') + '$');
     }
 });
 
