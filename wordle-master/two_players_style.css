@@ -25,6 +25,10 @@ body {
   justify-content: space-between;
   gap: 2rem;
 }
+@font-face {
+  font-family: Inter;
+  src: url("inter.otf");
+}
 
 header { border-bottom: 1px solid var(--color-gray-dark); display: inline}
 .empty{
@@ -36,7 +40,20 @@ header { border-bottom: 1px solid var(--color-gray-dark); display: inline}
   text-decoration: none;
   color: inherit;
 }
+.timer{
+  top: 50%;
+  left: calc(50% - 32px);
+  display: none;
+  position: absolute;
+}
+.timer.active{
+  display: block;
 
+}
+.timer-text{
+  font-size: 110px;
+  font-family: Inter, serif;
+}
 main {
   flex-grow: 1;
   display: flex;

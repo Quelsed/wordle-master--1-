@@ -3517,6 +3517,7 @@ const MAX_NUMBER_OF_ATTEMPTS = 6;
 const history = [];
 const history2 = [];
 let currentWord = '';
+let timer = document.querySelector('.timer');
 
 let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
@@ -3765,11 +3766,28 @@ const onKeyDown = (key) => {
                 el.style.display = 'none'
             });
         }, 2000)
+        setTimeout(function ()
+        {
+            showMessage('Передайте ход')
+            timer.classList.add('active');
+        }, 2000)
+
+        let timerText = timer.querySelector('a');
+        setTimeout(function (){
+            timerText.innerHTML = 3;
+        }, 2000)
+        setTimeout(function (){
+            timerText.innerHTML = 2;
+        }, 3000)
+        setTimeout(function (){
+            timerText.innerHTML = 1;
+        }, 4000)
         setTimeout(function (){
             document.querySelectorAll('.tab-panel2').forEach(el =>{
                 el.style.display = 'flex'
-            });
-        }, 4000);
+            })
+            timer.classList.remove('active');
+        }, 5000);
       flag = 1;
     }
     else if (currentWord.length === 5 && WORD_LIST.includes(currentWord) && flag === 1)
@@ -3780,11 +3798,28 @@ const onKeyDown = (key) => {
                 el.style.display = 'none'
             });
         }, 2000)
+        setTimeout(function ()
+        {
+            showMessage('Передайте ход')
+            timer.classList.add('active');
+        }, 2000)
+
+        let timerText = timer.querySelector('a');
+        setTimeout(function (){
+            timerText.innerHTML = 3;
+        }, 2000)
+        setTimeout(function (){
+            timerText.innerHTML = 2;
+        }, 3000)
+        setTimeout(function (){
+            timerText.innerHTML = 1;
+        }, 4000)
         setTimeout(function (){
             document.querySelectorAll('.tab-panel').forEach(el =>{
                 el.style.display = 'flex'
-            });
-        }, 4000);
+            })
+            timer.classList.remove('active');
+        }, 5000);
         flag = 0;
     }
     else {
