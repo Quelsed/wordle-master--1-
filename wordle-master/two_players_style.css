@@ -85,6 +85,8 @@ main {
   top: 20px;
   right: 30px;
   cursor: pointer;
+  font-size: 15px;
+  font-family: Inter, serif;
 
 }
 .popup{
@@ -302,12 +304,14 @@ main {
 
 .modal__close-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: Inter, serif;
   border: none;
   background-color: transparent;
   padding: 5px;
-  cursor: pointer;
 }
 
 .modal__close-btn svg path {

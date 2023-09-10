@@ -93,6 +93,26 @@ main {
 .button__add-text{
   font-family: Inter, serif;
 }
+.button__restart{
+  opacity: 1;
+  pointer-events: all;
+  cursor: pointer;
+  display: flex;
+  height: 60px;
+  padding: 12px 30px 12px 30px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 360px;
+  border: 1px solid #000;
+  background: #FFF;
+  text-decoration: none;
+  margin: 0 10px 8px;
+}
+.button__restart-text{
+  font-family: Inter, serif;
+}
+
 .right-word-title{
   font-family: Inter, serif;
   font-size: 18px;
@@ -161,6 +181,8 @@ main {
   top: 20px;
   right: 30px;
   cursor: pointer;
+  font-size: 15px;
+  font-family: Inter, serif;
 }
 .popup{
   position: absolute;
@@ -449,12 +471,14 @@ main {
 
 .modal__close-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: Inter, serif;
   border: none;
   background-color: transparent;
   padding: 5px;
-  cursor: pointer;
 }
 
 .modal__close-btn svg path {
