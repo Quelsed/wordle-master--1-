@@ -3522,6 +3522,7 @@ let timer = document.querySelector('.timer');
 let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
 let closePopupButton = document.querySelector('.close__popup');
+let undo = document.querySelector('.undo');
 
 var flag = 0;
 var f = 0;
@@ -3919,7 +3920,9 @@ window.addEventListener('keydown', (e) => {
       document.getElementById("my-modal").classList.remove("open")
   }
 });
-
+undo.addEventListener('click', () => {
+   location.reload();
+});
 document.querySelector("#my-modal .modal__box").addEventListener('click', event => {
   event._isClickWithInModal = true;
 });
