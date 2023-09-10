@@ -3522,6 +3522,7 @@ let timer = document.querySelector('.timer');
 let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
 let closePopupButton = document.querySelector('.close__popup');
+let undo = document.querySelector('.undo');
 
 var flag = 0;
 var f = 0;
@@ -3741,13 +3742,14 @@ const onKeyDown = (key) => {
 
     if (currentWord.length === 5 && WORD_LIST.includes(currentWord) && flag === 0) {
         checkGuess(currentWord, WORD_OF_THE_DAY);
-        setTimeout(function (){
+
+        if (f === 0)
+        {
+            setTimeout(function (){
             document.querySelectorAll('.tab-panel').forEach(el =>{
                 el.style.display = 'none'
             });
-        }, 2000)
-        if (f === 0)
-        {
+            }, 2000)
             setTimeout(function ()
             {
                 showMessage('Йөрешне күчерегез...')
@@ -3776,13 +3778,13 @@ const onKeyDown = (key) => {
     else if (currentWord.length === 5 && WORD_LIST.includes(currentWord) && flag === 1)
     {
         checkGuess(currentWord, WORD_OF_THE_DAY);
-        setTimeout(function (){
+        if (f === 0)
+        {
+            setTimeout(function (){
             document.querySelectorAll('.tab-panel2').forEach(el =>{
                 el.style.display = 'none'
             });
-        }, 2000)
-        if (f === 0)
-        {
+            }, 2000)
             setTimeout(function ()
             {
                 showMessage('Йөрешне күчерегез...')
@@ -3898,7 +3900,9 @@ window.addEventListener('keydown', (e) => {
       document.getElementById("my-modal").classList.remove("open")
   }
 });
-
+undo.addEventListener('click', () => {
+   location.reload();
+});
 document.querySelector("#my-modal .modal__box").addEventListener('click', event => {
   event._isClickWithInModal = true;
 });
