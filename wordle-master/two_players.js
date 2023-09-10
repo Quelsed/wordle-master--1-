@@ -3504,12 +3504,8 @@ const WORD_GUESS_LIST = ["КАЗАН",
     "ТӘРТӘ",
     "ТОЗАК"
 ];
-const WORD_TRANSLATES_LIST = [];
-const INDEX = getRandomIndex(WORD_LIST.length);
-const WORD_OF_THE_DAY = WORD_LIST[INDEX];
-const WORD_OF_THE_DAY_TRANSLATE = WORD_TRANSLATES_LIST[INDEX];
-const FAV_WORDS = [];
-console.log(WORD_OF_THE_DAY);
+const INDEX = getRandomIndex(WORD_GUESS_LIST.length);
+const WORD_OF_THE_DAY = WORD_GUESS_LIST[INDEX];
 
 
 const MAX_NUMBER_OF_ATTEMPTS = 6;
