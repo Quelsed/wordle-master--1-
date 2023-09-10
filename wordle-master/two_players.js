@@ -3524,6 +3524,7 @@ let popup = document.querySelector('.popup');
 let closePopupButton = document.querySelector('.close__popup');
 
 var flag = 0;
+var f = 0;
 
 
 const init = () => {
@@ -3676,9 +3677,15 @@ const checkGuess = (guess, word) => {
   });
 
   if (guess === word){
-    showMessage('Котлыйм, дөрес!');
-    popupBg.classList.add('active');
-    popup.classList.add('active');
+    if (flag === 0)
+    {
+        showMessage('Победа за первым игроком!');
+    }
+    else
+    {
+        showMessage('Победа за вторым игроком!');
+    }
+    f = 1;
     return;
   }
 
@@ -3686,21 +3693,14 @@ const checkGuess = (guess, word) => {
   if (flag === 0)
   {
       history.push(currentWord);
-      if (history.length === MAX_NUMBER_OF_ATTEMPTS && guess!==word){
-          showMessage('Кызганыч, сез сүз тапмадыгыз.');
-          popupBg.classList.add('active');
-          popup.classList.add('active');
-          return;
-      }
   }
   else
   {
       history2.push(currentWord);
       if (history2.length === MAX_NUMBER_OF_ATTEMPTS && guess!==word)
       {
-          showMessage('Кызганыч, сез сүз тапмадыгыз.');
-          popupBg.classList.add('active');
-          popup.classList.add('active');
+          showMessage('Беркем дә җиңмәде!');
+          f = 1;
           return;
       }
   }
@@ -3716,7 +3716,7 @@ const onKeyboardButtonClick = (event) => {
 
 const onKeyDown = (key) => {
   // Don't allow more than 6 attempts to guess the word
-  if (history.length >= MAX_NUMBER_OF_ATTEMPTS || history2.length >= MAX_NUMBER_OF_ATTEMPTS) return;
+  if (history.length >= MAX_NUMBER_OF_ATTEMPTS && history2.length >= MAX_NUMBER_OF_ATTEMPTS) return;
 
   // Find the current active row
   let targetColumn;
@@ -3766,29 +3766,32 @@ const onKeyDown = (key) => {
                 el.style.display = 'none'
             });
         }, 2000)
-        setTimeout(function ()
+        if (f === 0)
         {
-            showMessage('Передайте ход')
-            timer.classList.add('active');
-        }, 2000)
+            setTimeout(function ()
+            {
+                showMessage('Передайте ход')
+                timer.classList.add('active');
+            }, 2000)
 
-        let timerText = timer.querySelector('a');
-        setTimeout(function (){
-            timerText.innerHTML = 3;
-        }, 2000)
-        setTimeout(function (){
-            timerText.innerHTML = 2;
-        }, 3000)
-        setTimeout(function (){
-            timerText.innerHTML = 1;
-        }, 4000)
-        setTimeout(function (){
-            document.querySelectorAll('.tab-panel2').forEach(el =>{
-                el.style.display = 'flex'
-            })
-            timer.classList.remove('active');
-        }, 5000);
-      flag = 1;
+            let timerText = timer.querySelector('a');
+            setTimeout(function (){
+                timerText.innerHTML = 3;
+            }, 2000)
+            setTimeout(function (){
+                timerText.innerHTML = 2;
+            }, 3000)
+            setTimeout(function (){
+                timerText.innerHTML = 1;
+            }, 4000)
+            setTimeout(function (){
+                document.querySelectorAll('.tab-panel2').forEach(el =>{
+                    el.style.display = 'flex'
+                })
+                timer.classList.remove('active');
+            }, 5000);
+            flag = 1;
+        }
     }
     else if (currentWord.length === 5 && WORD_LIST.includes(currentWord) && flag === 1)
     {
@@ -3798,29 +3801,32 @@ const onKeyDown = (key) => {
                 el.style.display = 'none'
             });
         }, 2000)
-        setTimeout(function ()
+        if (f === 0)
         {
-            showMessage('Передайте ход')
-            timer.classList.add('active');
-        }, 2000)
+            setTimeout(function ()
+            {
+                showMessage('Передайте ход')
+                timer.classList.add('active');
+            }, 2000)
 
-        let timerText = timer.querySelector('a');
-        setTimeout(function (){
-            timerText.innerHTML = 3;
-        }, 2000)
-        setTimeout(function (){
-            timerText.innerHTML = 2;
-        }, 3000)
-        setTimeout(function (){
-            timerText.innerHTML = 1;
-        }, 4000)
-        setTimeout(function (){
-            document.querySelectorAll('.tab-panel').forEach(el =>{
-                el.style.display = 'flex'
-            })
-            timer.classList.remove('active');
-        }, 5000);
-        flag = 0;
+            let timerText = timer.querySelector('a');
+            setTimeout(function (){
+                timerText.innerHTML = 3;
+            }, 2000)
+            setTimeout(function (){
+                timerText.innerHTML = 2;
+            }, 3000)
+            setTimeout(function (){
+                timerText.innerHTML = 1;
+            }, 4000)
+            setTimeout(function (){
+                document.querySelectorAll('.tab-panel').forEach(el =>{
+                    el.style.display = 'flex'
+                })
+                timer.classList.remove('active');
+            }, 5000);
+            flag = 0;
+        }
     }
     else {
         currentRow.setAttribute('data-animation', 'invalid');
