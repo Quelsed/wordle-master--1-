@@ -210,8 +210,9 @@ main {
   transition: 0.5s all;
 }
 .dict_popup__title{
-  text-align: center;
-  margin-bottom: 24px;
+  text-align: left;
+  margin-bottom: 35px;
+  margin-top: 20px;
 }
 .dict_popup__bg.active{
   opacity: 1;
@@ -223,6 +224,8 @@ main {
   top: 20px;
   right: 30px;
   cursor: pointer;
+  font-size: 15px;
+  font-family: Inter, serif;
 }
 .no_words{
   display: block;
@@ -476,4 +479,9 @@ main {
 }
 .vocabulary_word{
   cursor: pointer;
+  font-family: Inter, serif;
+}
+.vocabulary_divider{
+  border-top: 2px solid #bbbbbb;
+  border-radius: 5px;
 }
